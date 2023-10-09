@@ -1,0 +1,8 @@
+### Checking that the application is working
+GET http://{{host}}/api/v1/hello
+
+{}
+### Pass the request to the back service
+GET http://{{host}}/api/v1/ping
+
+{}

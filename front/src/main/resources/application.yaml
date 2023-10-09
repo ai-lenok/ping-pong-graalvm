@@ -1,0 +1,19 @@
+quarkus:
+  application:
+    name: simple-ping-pong-server
+  http:
+    port: 8080
+  jib:
+    base-jvm-image: registry.access.redhat.com/ubi9/openjdk-17-runtime:1.16
+    jvm-entrypoint: /entrypoint.sh
+    working-directory: /work
+  grpc:
+    clients:
+      pingPong:
+        host: localhost
+    server:
+      port: 9999
+  native:
+    additional-build-args:
+      - -H:ReflectionConfigurationFiles=reflection-config.json
+      - -H:ResourceConfigurationFiles=resources-config.json

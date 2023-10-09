@@ -1,0 +1,69 @@
+front:
+  name: "ping-pong-front"
+  port_inside: 8080
+  replicaCount: 2
+  image:
+    repository: dzx912/simple-ping-pong-server-native
+    pullPolicy: IfNotPresent
+    tag: "1"
+  resources:
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+  probe:
+    initialDelaySeconds: 10
+    timeoutSeconds: 1
+    periodSeconds: 1
+    failureThreshold: 3
+  selectorLabels:
+    app:
+      kubernetes:
+        io/name: ping-pong-front
+  service:
+    type: ClusterIP
+    port: 80
+
+back:
+  name: "ping-pong-back"
+  replicaCount: 1
+  image:
+    repository: cr.yandex/crpgk613v73vgpjgt471/ping-pong-grpc-stub
+    pullPolicy: IfNotPresent
+    tag: "1"
+  delay:
+    low: 100
+    upper: 1000
+  port_inside: 8080
+  resources:
+    limits:
+      cpu: 100m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  selectorLabels:
+    app:
+      kubernetes:
+        io/name: ping-pong-back
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: "ping-pong-demo.ru"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []

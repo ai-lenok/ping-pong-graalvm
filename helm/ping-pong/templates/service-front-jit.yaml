@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.frontJit.name }}
+  labels:
+    {{- include "ping-pong.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.frontJit.service.type }}
+  ports:
+    - port: {{ .Values.frontJit.service.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: http-jit
+  selector:
+    app.kubernetes.io/name: ping-pong-front-jit

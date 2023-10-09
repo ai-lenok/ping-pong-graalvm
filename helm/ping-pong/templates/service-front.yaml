@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.front.name }}
+  labels:
+    {{- include "ping-pong.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.front.service.type }}
+  ports:
+    - port: {{ .Values.front.service.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: http-native
+  selector:
+    app.kubernetes.io/name: ping-pong-front

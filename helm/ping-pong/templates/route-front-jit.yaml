@@ -1,0 +1,14 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ .Values.frontJit.name | trunc 63 | quote }}
+spec:
+  host: >-
+    pp-f-jit-{{ .Release.Namespace }}.apps.lt-gen2.ocp.delta.sbrf.ru
+  to:
+    kind: Service
+    name: {{ .Values.frontJit.name }}
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None

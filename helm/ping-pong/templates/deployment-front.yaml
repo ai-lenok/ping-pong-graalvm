@@ -1,0 +1,49 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ping-pong-front
+  labels:
+    {{- include "ping-pong.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.front.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ping-pong-front
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ping-pong-front
+    spec:
+      containers:
+        - name: ping-pong-front-cont
+          image: "{{ .Values.front.image.repository }}:{{ .Values.front.image.tag }}"
+          imagePullPolicy: {{ .Values.front.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.front.port_inside }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: http
+            initialDelaySeconds: {{ .Values.front.probe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.front.probe.timeoutSeconds }}
+            periodSeconds: {{ .Values.front.probe.periodSeconds }}
+            failureThreshold: {{ .Values.front.probe.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: http
+            initialDelaySeconds: {{ .Values.front.probe.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.front.probe.timeoutSeconds }}
+            periodSeconds: {{ .Values.front.probe.periodSeconds }}
+            failureThreshold: {{ .Values.front.probe.failureThreshold }}
+          resources:
+            {{- toYaml .Values.front.resources | nindent 12 }}
+          volumeMounts:
+            - name: {{ .Values.front.name }}-config-volume
+              mountPath: /work/config/
+      volumes:
+        - name: {{ .Values.front.name }}-config-volume
+          configMap:
+            name: {{ .Values.front.name }}-config

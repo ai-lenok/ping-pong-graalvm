@@ -1,0 +1,16 @@
+quarkus:
+  application:
+    name: ping-pong-grpc-stub
+
+  grpc:
+    server:
+      enable-reflection-service: true
+  jib:
+    base-jvm-image: registry.access.redhat.com/ubi9/openjdk-17-runtime:1.16
+    jvm-entrypoint: /entrypoint.sh
+    working-directory: /work
+
+grpc-stub:
+  bound:
+    lower: 100
+    upper: 400

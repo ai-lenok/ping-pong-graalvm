@@ -1,0 +1,13 @@
+GET http://{{host}}/bound
+
+{}
+
+###
+POST http://{{host}}/bound
+
+{"lower":10, "upper":1000}
+
+###
+GET http://{{host}}/q/health/ready
+
+{}

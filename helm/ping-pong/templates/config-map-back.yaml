@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.back.name }}-config
+data:
+  application.yaml: |
+    grpc-stub:
+      bound:
+        low: {{ .Values.back.delay.low }}
+        upper: {{ .Values.back.delay.upper }}

@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ .Values.front.name }}-config
+data:
+  application.yaml: |
+    quarkus:
+      http:
+        port: {{ .Values.front.port_inside }}
+      grpc:
+        clients:
+          pingPong:
+            host: {{ .Values.back.name }}.{{ .Release.Namespace }}.svc.cluster.local

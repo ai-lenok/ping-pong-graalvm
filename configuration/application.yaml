@@ -1,0 +1,8 @@
+quarkus:
+  http:
+    port: 8080
+
+  grpc:
+    clients:
+      pingPong:
+        host: backend-stub
