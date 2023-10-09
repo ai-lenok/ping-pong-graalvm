@@ -98,7 +98,7 @@ The application responds to a REST request from the user
 
 #### API
 
-Example of REST requests in Intellij IDEA notation: [example](http/front.http)
+Example of REST requests in IDEA REST Client notation: [example](http/front.http)
 
 ##### cURL Example
 
@@ -120,7 +120,7 @@ The application receives a gRPC request and responds with a delay
 
 #### API
 
-Example of REST requests in Intellij IDEA notation: [example](http/back.http)
+Example of REST requests in IDEA REST Client notation: [example](http/back.http)
 
 ##### cURL Example
 
