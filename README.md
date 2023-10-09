@@ -96,6 +96,8 @@ You can test the system using the regular JDK version
 
 The application responds to a REST request from the user
 
+[Source](front/)
+
 #### API
 
 Example of REST requests in IDEA REST Client notation: [example](http/front.http)
@@ -117,6 +119,8 @@ curl http://localhost:8080/api/v1/ping
 ### Back
 
 The application receives a gRPC request and responds with a delay
+
+[Source](back/)
 
 #### API
 
